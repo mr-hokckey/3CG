@@ -9,8 +9,10 @@ CARD_STATE = {
     GRABBED
 }
 
+CARD_SPRITE_SHEET = love.graphics.newImage("assets/p1_cards.png")
+
 CARD_DATA = require("cardData")
-CARD_BACK = love.graphics.newQuad()
+CARD_BACK_QUAD = love.graphics.newQuad(6 * CARD_WIDTH, 4 * CARD_HEIGHT, CARD_WIDTH, CARD_HEIGHT, CARD_SPRITE_SHEET)
 
 function CardClass:new(name, owner, location)
     local card = {}
@@ -25,17 +27,12 @@ function CardClass:new(name, owner, location)
 
     card.type = CARD_DATA[name]
     card.name = name
-    card.cost = card.type[cost]
-    card.power = card.type[power]
-    card.text = card.type[text]
-    card.ability = card.type[ability]
+    card.cost = card.type.cost
+    card.power = card.type.power
+    card.text = card.type.text
+    card.ability = card.type.ability
 
-    card.sprite = nil
-    for i, value in ipairs(CARD_NAMES) do
-        if value == name then
-            card.sprite = love.graphics.newQuad((i-1) % 7, (i-1)//5, CARD_WIDTH, CARD_HEIGHT)
-        end
-    end
+    card.quad = love.graphics.newQuad(card.type.id % 7 * CARD_WIDTH, math.floor(card.type.id / 5) * CARD_HEIGHT, CARD_WIDTH, CARD_HEIGHT, CARD_SPRITE_SHEET)
 
     return card
 end
@@ -45,7 +42,10 @@ function CardClass:update()
 end
 
 function CardClass:draw()
-    
+    love.graphics.setColor(1, 1, 1, 1)
+    -- love.graphics.newQuad(self.id % 7 * CARD_WIDTH, self.id / 5 * CARD_HEIGHT, CARD_WIDTH, CARD_HEIGHT, CARD_SPRITE_SHEET)
+    -- love.graphics.draw(self.sprite, self.position.x, self.position.y)
+    love.graphics.draw(CARD_SPRITE_SHEET, self.quad, self.position.x, self.position.y)
 end
 
 function CardClass:flip()

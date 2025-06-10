@@ -5,65 +5,8 @@ SCREEN_HEIGHT = 720
 CARD_WIDTH = 64
 CARD_HEIGHT = 96
 
--- POSITIONS = {
---     LOCATION_1 = {
---         P1 = {
---             Vector(SCREEN_WIDTH * 3/8 - CARD_WIDTH,   SCREEN_HEIGHT * 5/9               ),
---             Vector(SCREEN_WIDTH * 3/8,                SCREEN_HEIGHT * 5/9               ),
---             Vector(SCREEN_WIDTH * 3/8 - CARD_WIDTH,   SCREEN_HEIGHT * 5/9 + CARD_HEIGHT ),
---             Vector(SCREEN_WIDTH * 3/8,                SCREEN_HEIGHT * 5/9 + CARD_HEIGHT )
---         },
---         P2 = {
---             Vector(SCREEN_WIDTH * 3/8 - CARD_WIDTH,   SCREEN_HEIGHT * 4/9 - CARD_HEIGHT     ),
---             Vector(SCREEN_WIDTH * 3/8,                SCREEN_HEIGHT * 4/9 - CARD_HEIGHT     ),
---             Vector(SCREEN_WIDTH * 3/8 - CARD_WIDTH,   SCREEN_HEIGHT * 4/9 - CARD_HEIGHT*2   ),
---             Vector(SCREEN_WIDTH * 3/8,                SCREEN_HEIGHT * 4/9 - CARD_HEIGHT*2   )
---         }
---     },
---     LOCATION_2 = {
---         P1 = {
---             Vector(SCREEN_WIDTH * 4/8 - CARD_WIDTH,   SCREEN_HEIGHT * 5/9               ),
---             Vector(SCREEN_WIDTH * 4/8,                SCREEN_HEIGHT * 5/9               ),
---             Vector(SCREEN_WIDTH * 4/8 - CARD_WIDTH,   SCREEN_HEIGHT * 5/9 + CARD_HEIGHT ),
---             Vector(SCREEN_WIDTH * 4/8,                SCREEN_HEIGHT * 5/9 + CARD_HEIGHT )
---         },
---         P2 = {
---             Vector(SCREEN_WIDTH * 4/8 - CARD_WIDTH,   SCREEN_HEIGHT * 4/9 - CARD_HEIGHT     ),
---             Vector(SCREEN_WIDTH * 4/8,                SCREEN_HEIGHT * 4/9 - CARD_HEIGHT     ),
---             Vector(SCREEN_WIDTH * 4/8 - CARD_WIDTH,   SCREEN_HEIGHT * 4/9 - CARD_HEIGHT*2   ),
---             Vector(SCREEN_WIDTH * 4/8,                SCREEN_HEIGHT * 4/9 - CARD_HEIGHT*2   )
---         }
---     },
---     LOCATION_3 = {
---         P1 = {
---             Vector(SCREEN_WIDTH * 5/8 - CARD_WIDTH,   SCREEN_HEIGHT * 5/9               ),
---             Vector(SCREEN_WIDTH * 5/8,                SCREEN_HEIGHT * 5/9               ),
---             Vector(SCREEN_WIDTH * 5/8 - CARD_WIDTH,   SCREEN_HEIGHT * 5/9 + CARD_HEIGHT ),
---             Vector(SCREEN_WIDTH * 5/8,                SCREEN_HEIGHT * 5/9 + CARD_HEIGHT )
---         },
---         P2 = {
---             Vector(SCREEN_WIDTH * 5/8 - CARD_WIDTH,   SCREEN_HEIGHT * 4/9 - CARD_HEIGHT     ),
---             Vector(SCREEN_WIDTH * 5/8,                SCREEN_HEIGHT * 4/9 - CARD_HEIGHT     ),
---             Vector(SCREEN_WIDTH * 5/8 - CARD_WIDTH,   SCREEN_HEIGHT * 4/9 - CARD_HEIGHT*2   ),
---             Vector(SCREEN_WIDTH * 5/8,                SCREEN_HEIGHT * 4/9 - CARD_HEIGHT*2   )
---         }
---     },
---     HAND = {
---         P1 = { Vector(SCREEN_WIDTH * 2/4 - CARD_WIDTH/2, SCREEN_HEIGHT - CARD_HEIGHT) },
---         P2 = { Vector(SCREEN_WIDTH * 2/4 - CARD_WIDTH/2, 0                          ) }
---     },
---     DECK = {
---         P1 = { Vector(SCREEN_WIDTH * 3/4 - CARD_WIDTH, SCREEN_HEIGHT - CARD_HEIGHT  ) },
---         P2 = { Vector(SCREEN_WIDTH * 3/4 - CARD_WIDTH, 0                            ) }
---     },
---     DISCARD = {
---         P1 = { Vector(SCREEN_WIDTH * 1/4 - CARD_WIDTH, SCREEN_HEIGHT - CARD_HEIGHT  ) },
---         P2 = { Vector(SCREEN_WIDTH * 1/4 - CARD_WIDTH, 0                            ) }
---     }
--- }
-
 POSITIONS = {
-    P1 = {
+    {
         LOCATION_1 = {
             Vector(SCREEN_WIDTH * 3/8 - CARD_WIDTH,   SCREEN_HEIGHT * 5/9               ),
             Vector(SCREEN_WIDTH * 3/8,                SCREEN_HEIGHT * 5/9               ),
@@ -82,11 +25,19 @@ POSITIONS = {
             Vector(SCREEN_WIDTH * 5/8 - CARD_WIDTH,   SCREEN_HEIGHT * 5/9 + CARD_HEIGHT ),
             Vector(SCREEN_WIDTH * 5/8,                SCREEN_HEIGHT * 5/9 + CARD_HEIGHT )
         },
-        HAND =      { Vector(SCREEN_WIDTH * 2/4 - CARD_WIDTH/2, SCREEN_HEIGHT - CARD_HEIGHT)},
-        DECK =      { Vector(SCREEN_WIDTH * 3/4 - CARD_WIDTH,   SCREEN_HEIGHT - CARD_HEIGHT)},
-        DISCARD =   { Vector(SCREEN_WIDTH * 1/4,                SCREEN_HEIGHT - CARD_HEIGHT)}
+        HAND = { 
+            Vector(SCREEN_WIDTH * 1/2 - CARD_WIDTH * 7/2, SCREEN_HEIGHT - CARD_HEIGHT),
+            Vector(SCREEN_WIDTH * 1/2 - CARD_WIDTH * 5/2, SCREEN_HEIGHT - CARD_HEIGHT),
+            Vector(SCREEN_WIDTH * 1/2 - CARD_WIDTH * 3/2, SCREEN_HEIGHT - CARD_HEIGHT),
+            Vector(SCREEN_WIDTH * 1/2 - CARD_WIDTH * 1/2, SCREEN_HEIGHT - CARD_HEIGHT),
+            Vector(SCREEN_WIDTH * 1/2 + CARD_WIDTH * 1/2, SCREEN_HEIGHT - CARD_HEIGHT),
+            Vector(SCREEN_WIDTH * 1/2 + CARD_WIDTH * 3/2, SCREEN_HEIGHT - CARD_HEIGHT),
+            Vector(SCREEN_WIDTH * 1/2 + CARD_WIDTH * 5/2, SCREEN_HEIGHT - CARD_HEIGHT),
+        },
+        DECK =      { Vector(SCREEN_WIDTH * 3/4 - CARD_WIDTH,   SCREEN_HEIGHT - CARD_HEIGHT) },
+        DISCARD =   { Vector(SCREEN_WIDTH * 1/4,                SCREEN_HEIGHT - CARD_HEIGHT) }
     },
-    P2 = {
+    {
         LOCATION_1 = {
             Vector(SCREEN_WIDTH * 3/8 - CARD_WIDTH,   SCREEN_HEIGHT * 4/9 - CARD_HEIGHT     ),
             Vector(SCREEN_WIDTH * 3/8,                SCREEN_HEIGHT * 4/9 - CARD_HEIGHT     ),
@@ -105,7 +56,15 @@ POSITIONS = {
             Vector(SCREEN_WIDTH * 5/8 - CARD_WIDTH,   SCREEN_HEIGHT * 4/9 - CARD_HEIGHT*2   ),
             Vector(SCREEN_WIDTH * 5/8,                SCREEN_HEIGHT * 4/9 - CARD_HEIGHT*2   )
         },
-        HAND =      { Vector(SCREEN_WIDTH * 2/4 - CARD_WIDTH/2, 0) },
+        HAND = { 
+            Vector(SCREEN_WIDTH * 1/2 - CARD_WIDTH * 7/2, 0),
+            Vector(SCREEN_WIDTH * 1/2 - CARD_WIDTH * 5/2, 0),
+            Vector(SCREEN_WIDTH * 1/2 - CARD_WIDTH * 3/2, 0),
+            Vector(SCREEN_WIDTH * 1/2 - CARD_WIDTH * 1/2, 0),
+            Vector(SCREEN_WIDTH * 1/2 + CARD_WIDTH * 1/2, 0),
+            Vector(SCREEN_WIDTH * 1/2 + CARD_WIDTH * 3/2, 0),
+            Vector(SCREEN_WIDTH * 1/2 + CARD_WIDTH * 5/2, 0),
+        },
         DECK =      { Vector(SCREEN_WIDTH * 3/4 - CARD_WIDTH,   0) },
         DISCARD =   { Vector(SCREEN_WIDTH * 1/4,                0) }
     },

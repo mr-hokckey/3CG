@@ -48,9 +48,11 @@ function GameManagerClass:moveCard(card, src, dst)
     
 end
 
--- reposition cards in this card table.
-function GameManagerClass:reposition(cardTable)
-    
+-- given a player ID and a location, reposition cards in the corresponding card table.
+function GameManagerClass:reposition(owner, location)
+    for i, card in ipairs(self.cardTables[owner][location]) do
+        card.position = POSITIONS[owner][location][i]
+    end
 end
 -- function to be called when a player makes a move.
 -- add the move to the event queue.

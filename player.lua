@@ -28,7 +28,12 @@ end
 -- take a card from the player's deck and place it in their hand.
 -- this function will fail if the player has 7 cards in their hand.
 function PlayerClass:takeCardFromDeck()
+    if #self.hand >= 7 then 
+        return false
+    end
     
+    table.insert(self.hand, CardClass:new(table.remove(self.deck, 1), self.id, "HAND"))
+    return true
 end
 
 -- function to be called after click dragging a card from their hand to a location.
