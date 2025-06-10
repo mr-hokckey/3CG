@@ -1,20 +1,24 @@
 
 PlayerClass = {}
 
+PLAYER_KEYS = {
+    [1] = "P1",
+    [2] = "P2"
+}
+
 function PlayerClass:new(id, deck, hand, discard)
     local player = {}
     local metadata = {__index = PlayerClass}
     setmetatable(player, metadata)
 
     player.id = id
+    player.key = PLAYER_KEYS[id]
     player.mana = 0
     player.points = 0
 
     player.deck = deck
     player.hand = hand
     player.discard = discard
-
-    
 
     return player
 end

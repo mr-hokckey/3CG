@@ -23,7 +23,7 @@ function love.load()
 
     -- create cardTables, a table of tables. Every single card object will always be inside one of these.
     cardTables = {
-        {
+        P1 = {
             LOCATION_1 = {},
             LOCATION_2 = {},
             LOCATION_3 = {},
@@ -31,7 +31,7 @@ function love.load()
             DECK = {},
             DISCARD = {},
         },
-        {
+        P2 = {
             LOCATION_1 = {},
             LOCATION_2 = {},
             LOCATION_3 = {},
@@ -49,13 +49,13 @@ function love.load()
     p2_deck = { "Wooden Cow", "Wooden Cow", "Pegasus", "Pegasus", "Minotaur", "Minotaur", "Titan", "Titan", "Zeus", "Zeus", "Ares", "Ares", "Medusa", "Medusa", "Cyclops", "Cyclops", "Poseidon", "Poseidon", "Artemis", "Artemis", "Hera", "Hera" }
 
     -- create 2 player objects
-    player1 = PlayerClass:new(1, p1_deck, cardTables[1].HAND, cardTables[1].DISCARD)
-    player2 = PlayerClass:new(2, p2_deck, cardTables[2].HAND, cardTables[2].DISCARD)
+    player1 = PlayerClass:new(1, p1_deck, cardTables.P1.HAND, cardTables.P1.DISCARD)
+    player2 = PlayerClass:new(2, p2_deck, cardTables.P2.HAND, cardTables.P2.DISCARD)
     
     -- create 3 location objects
-    location1 = LocationClass:new(1, cardTables[1].LOCATION_1, cardTables[2].LOCATION_1)
-    location2 = LocationClass:new(1, cardTables[1].LOCATION_2, cardTables[2].LOCATION_2)
-    location3 = LocationClass:new(1, cardTables[1].LOCATION_3, cardTables[2].LOCATION_3)
+    location1 = LocationClass:new(1, cardTables.P1.LOCATION_1, cardTables.P2.LOCATION_1)
+    location2 = LocationClass:new(1, cardTables.P1.LOCATION_2, cardTables.P2.LOCATION_2)
+    location3 = LocationClass:new(1, cardTables.P1.LOCATION_3, cardTables.P2.LOCATION_3)
 
     player1:takeCardFromDeck()
     player1:takeCardFromDeck()
@@ -65,8 +65,8 @@ function love.load()
     player2:takeCardFromDeck()
     player2:takeCardFromDeck()
 
-    gameManager:reposition(1, "HAND")
-    gameManager:reposition(2, "HAND")
+    gameManager:reposition("P1", "HAND")
+    gameManager:reposition("P2", "HAND")
 end
 
 function love.update()
@@ -84,17 +84,17 @@ function love.draw()
     love.graphics.rectangle("fill", SCREEN_WIDTH * 1/4, 0, SCREEN_WIDTH * 1/2, SCREEN_HEIGHT)
 
     love.graphics.setColor(0.5, 0, 0, 1)
-    for l, loc in pairs(POSITIONS) do
-        for p, pla in pairs(loc) do
-            for _, vec in ipairs(pla) do
-                love.graphics.rectangle("line", vec.x, vec.y, CARD_WIDTH, CARD_HEIGHT)
+    for _, playerZones in pairs(POSITIONS) do
+        for _, zone in pairs(playerZones) do
+            for _, pos in ipairs(zone) do
+                love.graphics.rectangle("line", pos.x, pos.y, CARD_WIDTH, CARD_HEIGHT)
             end
         end 
     end
 
-    for _, p in pairs(cardTables) do
-        for _, l in pairs(p) do
-            for _, card in ipairs(l) do
+    for _, playerZones in pairs(cardTables) do
+        for _, zone in pairs(playerZones) do
+            for _, card in ipairs(zone) do
                 card:draw()
             end
         end 

@@ -9,6 +9,11 @@ CARD_STATE = {
     GRABBED
 }
 
+PLAYER_KEYS = {
+    [1] = "P1",
+    [2] = "P2"
+}
+
 CARD_SPRITE_SHEET = love.graphics.newImage("assets/cards.png")
 
 CARD_DATA = require("cardData")
@@ -20,6 +25,7 @@ function CardClass:new(name, owner, location)
     setmetatable(card, metadata)
 
     card.owner = owner
+    card.owner_key = PLAYER_KEYS[owner]
     card.location = location
     card.position = Vector()
     card.isFaceUp = true

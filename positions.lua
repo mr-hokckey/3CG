@@ -6,7 +6,7 @@ CARD_WIDTH = 64
 CARD_HEIGHT = 96
 
 POSITIONS = {
-    {
+    P1 = {
         LOCATION_1 = {
             Vector(SCREEN_WIDTH * 3/8 - CARD_WIDTH,   SCREEN_HEIGHT * 5/9               ),
             Vector(SCREEN_WIDTH * 3/8,                SCREEN_HEIGHT * 5/9               ),
@@ -37,7 +37,7 @@ POSITIONS = {
         DECK =      { Vector(SCREEN_WIDTH * 3/4 - CARD_WIDTH,   SCREEN_HEIGHT - CARD_HEIGHT) },
         DISCARD =   { Vector(SCREEN_WIDTH * 1/4,                SCREEN_HEIGHT - CARD_HEIGHT) }
     },
-    {
+    P2 = {
         LOCATION_1 = {
             Vector(SCREEN_WIDTH * 3/8 - CARD_WIDTH,   SCREEN_HEIGHT * 4/9 - CARD_HEIGHT     ),
             Vector(SCREEN_WIDTH * 3/8,                SCREEN_HEIGHT * 4/9 - CARD_HEIGHT     ),
@@ -72,7 +72,7 @@ POSITIONS = {
 
 
 DROP_ZONES = {
-    {
+    P1 = {
         LOCATION_1 = {
             MIN = Vector(SCREEN_WIDTH * 3/8 - CARD_WIDTH,   SCREEN_HEIGHT * 5/9),
             MAX = Vector(SCREEN_WIDTH * 3/8 + CARD_WIDTH,   SCREEN_HEIGHT * 5/9 + CARD_HEIGHT * 2)
