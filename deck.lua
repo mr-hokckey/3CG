@@ -3,10 +3,13 @@ DeckClass = {}
 
 CARD_NAMES = { "Wooden Cow", "Pegasus", "Minotaur", "Titan", "Zeus", "Ares", "Medusa", "Cyclops", "Poseidon", "Artemis", "Hera", "Demeter", "Hades", "Heracles", "Dionysus", "Hermes", "Hydra", "Ship of Theseus", "Sword of Damocles", "Midas", "Aphrodite", "Athena", "Apollo", "Hephaestus", "Persephone", "Prometheus", "Pandora", "Icarus", "Iris", "Nyx", "Atlas", "Daedalus", "Helios", "Mnemosyne" }
 
-function DeckClass:new()
+function DeckClass:new(cards, owner)
     local deck = {}
     local metadata = {__index = DeckClass}
     setmetatable(deck, metadata)
+
+    deck.cards = cards
+    deck.owner = owner
 
     return deck
 end
@@ -17,4 +20,6 @@ function DeckClass:checkLegal()
     
 end
 
-return DeckClass
+function DeckClass:shuffle()
+    
+end

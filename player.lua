@@ -1,10 +1,18 @@
 
 PlayerClass = {}
 
-function PlayerClass:new()
+function PlayerClass:new(id, deck, hand, discard)
     local player = {}
     local metadata = {__index = PlayerClass}
     setmetatable(player, metadata)
+
+    player.id = id
+    player.mana = 0
+    player.points = 0
+
+    player.deck = deck
+    player.hand = hand
+    player.discard = discard
 
     return player
 end
@@ -18,7 +26,7 @@ function PlayerClass:draw()
 end
 
 -- take a card from the player's deck and place it in their hand.
--- if they don't have space in their hand, discard it instead.
+-- this function will fail if the player has 7 cards in their hand.
 function PlayerClass:takeCardFromDeck()
     
 end
@@ -44,5 +52,3 @@ end
 function PlayerClass:submitPlay(gameManager)
     
 end
-
-return PlayerClass

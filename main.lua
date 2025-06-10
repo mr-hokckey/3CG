@@ -1,5 +1,7 @@
 
 function love.load()
+    -- create cardTables, a table of tables. Every single card object will always be inside one of these.
+
     -- create a gameManager object
 
     -- create 2 player objects

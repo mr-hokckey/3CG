@@ -6,6 +6,11 @@ function GrabberClass:new()
     local metadata = {__index = GrabberClass}
     setmetatable(grabber, metadata)
 
+    grabber.selectedCard = nil
+    grabber.grabbedCard = nil
+    grabber.grabPos = Vector()
+    grabber.grabOffset = Vector()
+
     return grabber
 end
 

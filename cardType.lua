@@ -8,5 +8,3 @@ function CardTypeClass:new()
 
     return cardType
 end
-
-return CardTypeClass
