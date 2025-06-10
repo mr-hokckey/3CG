@@ -1,6 +1,4 @@
 
-require "vector"
-
 CardClass = {}
 
 CARD_NAMES = { "Wooden Cow", "Pegasus", "Minotaur", "Titan", "Zeus", "Ares", "Medusa", "Cyclops", "Poseidon", "Artemis", "Hera", "Demeter", "Hades", "Heracles", "Dionysus", "Hermes", "Hydra", "Ship of Theseus", "Sword of Damocles", "Midas", "Aphrodite", "Athena", "Apollo", "Hephaestus", "Persephone", "Prometheus", "Pandora", "Icarus", "Iris", "Nyx", "Atlas", "Daedalus", "Helios", "Mnemosyne" }
@@ -13,9 +11,6 @@ CARD_STATE = {
 
 CARD_DATA = require("cardData")
 CARD_BACK = love.graphics.newQuad()
-
-CARD_WIDTH = 64
-CARD_HEIGHT = 96
 
 function CardClass:new(name, owner, location)
     local card = {}
