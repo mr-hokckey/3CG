@@ -21,6 +21,7 @@ function GameManagerClass:update()
     
 end
 
+-- draw 
 function GameManagerClass:draw()
     
 end
@@ -39,7 +40,19 @@ end
 
 -- returns the card pile the mouse is currently hovering over.
 function GameManagerClass:getDropTarget()
-    return "PASS"
+    for p, player in ipairs(DROP_ZONES) do
+        for l, location in pairs(player) do
+            local isMouseOver = 
+                love.mouse.getX() > location.MIN.x and
+                love.mouse.getX() < location.MAX.x and
+                love.mouse.getY() > location.MIN.y and
+                love.mouse.getY() < location.MAX.y
+            if isMouseOver then
+                return {p, l}
+            end
+        end
+    end
+    return {0, "FALSE"}
 end
 
 -- function to move any card to and from any location.

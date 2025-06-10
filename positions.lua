@@ -69,3 +69,21 @@ POSITIONS = {
         DISCARD =   { Vector(SCREEN_WIDTH * 1/4,                0) }
     },
 }
+
+
+DROP_ZONES = {
+    {
+        LOCATION_1 = {
+            MIN = Vector(SCREEN_WIDTH * 3/8 - CARD_WIDTH,   SCREEN_HEIGHT * 5/9),
+            MAX = Vector(SCREEN_WIDTH * 3/8 + CARD_WIDTH,   SCREEN_HEIGHT * 5/9 + CARD_HEIGHT * 2)
+        },
+        LOCATION_2 = {
+            MIN = Vector(SCREEN_WIDTH * 4/8 - CARD_WIDTH,   SCREEN_HEIGHT * 5/9),
+            MAX = Vector(SCREEN_WIDTH * 4/8 + CARD_WIDTH,   SCREEN_HEIGHT * 5/9 + CARD_HEIGHT * 2)
+        },
+        LOCATION_3 = {
+            MIN = Vector(SCREEN_WIDTH * 5/8 - CARD_WIDTH,   SCREEN_HEIGHT * 5/9),
+            MAX = Vector(SCREEN_WIDTH * 5/8 + CARD_WIDTH,   SCREEN_HEIGHT * 5/9 + CARD_HEIGHT * 2)
+        },
+    }
+}

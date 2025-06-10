@@ -1,5 +1,7 @@
 
+io.stdout:setvbuf("no")
 
+love.graphics.setDefaultFilter("nearest", "nearest")
 
 function love.load()
 
@@ -15,6 +17,9 @@ function love.load()
 
     love.window.setMode(SCREEN_WIDTH, SCREEN_HEIGHT)
     love.window.setTitle("Mythomagic")
+
+    smallFont = love.graphics.newFont("assets/MinecraftStandard.otf", 6, "mono")
+    love.graphics.setFont(smallFont)
 
     -- create cardTables, a table of tables. Every single card object will always be inside one of these.
     cardTables = {
@@ -70,10 +75,10 @@ end
 
 function love.draw()
     -- Color palette:
-    -- #000000 - Black
-    -- #800000 - Maroon
-    -- #D2691E - Chocolate
-    -- #FFF8DC - Cornsilk
+    -- setColor(0, 0, 0, 1) - #000000 - Black
+    -- setColor(0.5, 0, 0, 1) - #800000 - Maroon
+    -- setColor(0.82, 0.41, 0.12, 1) - #D2691E - Chocolate
+    -- setColor(1, 0.97, 0.86, 1) - #FFF8DC - Cornsilk
 
     love.graphics.setColor(0.82, 0.41, 0.12, 1)
     love.graphics.rectangle("fill", SCREEN_WIDTH * 1/4, 0, SCREEN_WIDTH * 1/2, SCREEN_HEIGHT)
@@ -82,7 +87,7 @@ function love.draw()
     for l, loc in pairs(POSITIONS) do
         for p, pla in pairs(loc) do
             for _, vec in ipairs(pla) do
-                love.graphics.rectangle("fill", vec.x, vec.y, CARD_WIDTH, CARD_HEIGHT)
+                love.graphics.rectangle("line", vec.x, vec.y, CARD_WIDTH, CARD_HEIGHT)
             end
         end 
     end

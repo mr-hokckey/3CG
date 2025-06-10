@@ -14,6 +14,8 @@ function PlayerClass:new(id, deck, hand, discard)
     player.hand = hand
     player.discard = discard
 
+    
+
     return player
 end
 

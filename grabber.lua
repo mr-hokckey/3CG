@@ -20,6 +20,7 @@ function GrabberClass:update()
 end
 
 -- re-draw the grabbed card so it appears on top of all the other cards.
+-- also draw the selected card on the left at a bigger scale, along with its description.
 function GrabberClass:draw()
     
 end

@@ -9,7 +9,7 @@ CARD_STATE = {
     GRABBED
 }
 
-CARD_SPRITE_SHEET = love.graphics.newImage("assets/p1_cards.png")
+CARD_SPRITE_SHEET = love.graphics.newImage("assets/cards.png")
 
 CARD_DATA = require("cardData")
 CARD_BACK_QUAD = love.graphics.newQuad(6 * CARD_WIDTH, 4 * CARD_HEIGHT, CARD_WIDTH, CARD_HEIGHT, CARD_SPRITE_SHEET)
@@ -32,7 +32,7 @@ function CardClass:new(name, owner, location)
     card.text = card.type.text
     card.ability = card.type.ability
 
-    card.quad = love.graphics.newQuad(card.type.id % 7 * CARD_WIDTH, math.floor(card.type.id / 5) * CARD_HEIGHT, CARD_WIDTH, CARD_HEIGHT, CARD_SPRITE_SHEET)
+    card.quad = love.graphics.newQuad((card.type.id % 7 + (card.owner-1)*7) * CARD_WIDTH, math.floor(card.type.id / 5) * CARD_HEIGHT, CARD_WIDTH, CARD_HEIGHT, CARD_SPRITE_SHEET)
 
     return card
 end
@@ -42,10 +42,21 @@ function CardClass:update()
 end
 
 function CardClass:draw()
+    love.graphics.push()
+
+    love.graphics.translate(self.position.x, self.position.y)
+    
     love.graphics.setColor(1, 1, 1, 1)
-    -- love.graphics.newQuad(self.id % 7 * CARD_WIDTH, self.id / 5 * CARD_HEIGHT, CARD_WIDTH, CARD_HEIGHT, CARD_SPRITE_SHEET)
-    -- love.graphics.draw(self.sprite, self.position.x, self.position.y)
-    love.graphics.draw(CARD_SPRITE_SHEET, self.quad, self.position.x, self.position.y)
+    if self.isFaceUp then
+        love.graphics.draw(CARD_SPRITE_SHEET, self.quad, 0, 0)
+        love.graphics.setColor(0.82, 0.41, 0.12, 1)
+        love.graphics.printf(self.cost, 0, 1, CARD_WIDTH / 4, "center", 0)
+        love.graphics.printf(self.power, CARD_WIDTH * 3 / 4, 1, CARD_WIDTH / 4, "center", 0)
+    else
+        love.graphics.draw(CARD_SPRITE_SHEET, CARD_BACK_QUAD, 0, 0)
+    end
+
+    love.graphics.pop()
 end
 
 function CardClass:flip()
