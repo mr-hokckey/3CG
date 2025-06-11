@@ -19,6 +19,8 @@ function love.load()
     love.window.setTitle("Mythomagic") -- A reference to Percy Jackson
 
     smallFont = love.graphics.newFont("assets/MinecraftStandard.otf", 6, "mono")
+    mediumFont = love.graphics.newFont("assets/MinecraftStandard.otf", 12, "mono")
+    largeFont = love.graphics.newFont("assets/MinecraftStandard.otf", 24, "mono")
     love.graphics.setFont(smallFont)
 
     -- create cardTables, a table of tables. Every single card object will always be inside one of these.
@@ -54,8 +56,8 @@ function love.load()
     
     -- create 3 location objects
     location1 = LocationClass:new(1, cardTables.P1.LOCATION_1, cardTables.P2.LOCATION_1)
-    location2 = LocationClass:new(1, cardTables.P1.LOCATION_2, cardTables.P2.LOCATION_2)
-    location3 = LocationClass:new(1, cardTables.P1.LOCATION_3, cardTables.P2.LOCATION_3)
+    location2 = LocationClass:new(2, cardTables.P1.LOCATION_2, cardTables.P2.LOCATION_2)
+    location3 = LocationClass:new(3, cardTables.P1.LOCATION_3, cardTables.P2.LOCATION_3)
 
     player1:takeCardFromDeck()
     player1:takeCardFromDeck()
@@ -77,6 +79,10 @@ end
 
 function love.update()
     grabber:update()
+
+    location1:update()
+    location2:update()
+    location3:update()
 end
 
 function love.draw()
@@ -105,6 +111,10 @@ function love.draw()
             end
         end 
     end
+
+    location1:draw()
+    location2:draw()
+    location3:draw()
 
     grabber:draw()
 end
