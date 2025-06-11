@@ -55,13 +55,15 @@ function GameManagerClass:getDropTarget()
     return "FALSE"
 end
 
+
+
 -- function to move any card to and from any location.
 -- src and dst are location strings, card is a card object.
 function GameManagerClass:moveCard(card, src, dst)
 
     if src == dst then 
         self:reposition(card.owner_key, src)
-        return 
+        return false
     end
     
     if dst ~= "FALSE" and #self.cardTables[card.owner_key][dst] < #POSITIONS[card.owner_key][dst] then
@@ -77,6 +79,8 @@ function GameManagerClass:moveCard(card, src, dst)
         self:reposition(card.owner_key, dst)
     end
     self:reposition(card.owner_key, src)
+
+    return true
 end
 
 -- given a player ID and a location, reposition cards in the corresponding card table.
@@ -88,7 +92,11 @@ end
 -- function to be called when a player makes a move.
 -- add the move to the event queue.
 function GameManagerClass:addMoveToQueue(player, card, location)
-    
+    table.insert(self.revealQueue, {
+        player = player, 
+        card = card, 
+        location = location
+    })
 end
 
 -- function to call once both players have submitted their play.

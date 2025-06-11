@@ -13,7 +13,7 @@ function PlayerClass:new(id, deck, hand, discard)
 
     player.id = id
     player.key = PLAYER_KEYS[id]
-    player.mana = 0
+    player.mana = 10
     player.points = 0
 
     player.deck = deck
@@ -28,7 +28,12 @@ function PlayerClass:update()
 end
 
 function PlayerClass:draw()
-    
+    love.graphics.setFont(largeFont)
+
+    love.graphics.printf("MANA:\nSCORE:", PLAYER_NUMBERS[self.id].x, PLAYER_NUMBERS[self.id].y, SCREEN_WIDTH / 8, "right")
+    love.graphics.printf("  " .. self.mana .. "\n  " .. self.points, PLAYER_NUMBERS[self.id].x + SCREEN_WIDTH / 8, PLAYER_NUMBERS[self.id].y, SCREEN_WIDTH / 8, "left")
+
+    love.graphics.setFont(smallFont)
 end
 
 -- take a card from the player's deck and place it in their hand.
@@ -43,11 +48,16 @@ function PlayerClass:takeCardFromDeck()
 end
 
 -- function to be called after click dragging a card from their hand to a location.
--- This adds the player's move to the Event Queue in the gameManager.
+-- attempt to move the card to the location. fails if the location is full or the player
+-- doesn't have enough mana. then adds the player's move to the Event Queue in the gameManager.
 function PlayerClass:stageCard(gameManager, card, dst)
-    gameManager:moveCard(card, "hand", dst)
-    -- self.mana = self.mana - card.cost
-    gameManager:addMoveToQueue("player", card, dst)
+    if self.mana >= card.cost then
+        if gameManager:moveCard(card, "HAND", dst) then
+            self.mana = self.mana - card.cost
+            gameManager:addMoveToQueue(card.owner_key, card, dst)
+        end
+    end
+    gameManager:reposition(card.owner_key, card.location)
 end
 
 -- undo all moves.
@@ -56,6 +66,12 @@ function PlayerClass:undoAll(gameManager)
         -- move the card back to the player's hand
         -- give them their mana back
         -- clear this move from the event queue.
+
+    for i = #gameManager.revealQueue, 1, -1 do
+        gameManager:moveCard(gameManager.revealQueue[i].card, gameManager.revealQueue[i].location, "HAND")
+        self.mana = self.mana + gameManager.revealQueue[i].card.cost
+        table.remove(gameManager.revealQueue, i)
+    end
 end
 
 -- function to be called after the player is finished staging their cards.

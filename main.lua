@@ -62,19 +62,15 @@ function love.load()
     player1:takeCardFromDeck()
     player1:takeCardFromDeck()
     player1:takeCardFromDeck()
-    player1:takeCardFromDeck()
-    player1:takeCardFromDeck()
-    player1:takeCardFromDeck()
-    player1:takeCardFromDeck()
 
     player2:takeCardFromDeck()
     player2:takeCardFromDeck()
     player2:takeCardFromDeck()
+
+    grabber = GrabberClass:new(player1)
 
     gameManager:reposition("P1", "HAND")
     gameManager:reposition("P2", "HAND")
-
-    grabber = GrabberClass:new()
 end
 
 function love.update()
@@ -112,9 +108,22 @@ function love.draw()
         end 
     end
 
+    player1:draw()
+    player2:draw()
+
     location1:draw()
     location2:draw()
     location3:draw()
 
     grabber:draw()
+end
+
+function love.keypressed(key, scancode, isrepeat)
+    if key == "u" then
+        player1:undoAll(gameManager)
+    end
+
+    if key == "s" then
+        player1:submitPlay(gameManager)
+    end
 end

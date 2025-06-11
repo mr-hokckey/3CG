@@ -3,7 +3,7 @@ GrabberClass = {}
 
 local gameManager = require("gameManager")
 
-function GrabberClass:new()
+function GrabberClass:new(owner)
     local grabber = {}
     local metadata = {__index = GrabberClass}
     setmetatable(grabber, metadata)
@@ -12,6 +12,8 @@ function GrabberClass:new()
     grabber.grabbedCard = nil
     grabber.grabPos = Vector()
     grabber.grabOffset = Vector()
+
+    grabber.owner = owner
 
     return grabber
 end
@@ -70,8 +72,12 @@ function GrabberClass:draw()
     end
 end
 
+-- grab a card.
+-- the only cards that can be grabbed are ones in P1's hand.
 function GrabberClass:grab()
-    if self.selectedCard ~= nil then
+    if self.selectedCard == nil then return end
+
+    if self.selectedCard.owner_key == "P1" and self.selectedCard.location == "HAND" then
         self.grabbedCard = self.selectedCard
         self.grabPos = self.grabbedCard.position
         self.grabOffset = Vector(love.mouse.getX(), love.mouse.getY()) - self.grabPos 
@@ -81,7 +87,8 @@ end
 function GrabberClass:release()
     local dst = gameManager:getDropTarget()
 
-    gameManager:moveCard(self.grabbedCard, self.grabbedCard.location, dst)
+    -- gameManager:moveCard(self.grabbedCard, self.grabbedCard.location, dst)
+    self.owner:stageCard(gameManager, self.grabbedCard, dst)
 
     self.grabbedCard.state = CARD_STATE.IDLE
 
