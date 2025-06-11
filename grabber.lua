@@ -20,7 +20,7 @@ end
 function GrabberClass:update()
     self.selectedCard = nil
     
-    for p, playerZones in ipairs(gameManager.cardTables) do
+    for p, playerZones in pairs(gameManager.cardTables) do
         for l, zone in pairs(playerZones) do
             for _, card in ipairs(zone) do
                 card.state = CARD_STATE.IDLE
@@ -47,6 +47,7 @@ function GrabberClass:update()
     if self.grabbedCard ~= nil then
         self.grabbedCard.state = CARD_STATE.GRABBED
         self.grabbedCard.position = Vector(love.mouse.getX(), love.mouse.getY()) - self.grabOffset
+        self.selectedCard = self.grabbedCard
     end
 end
 
@@ -58,14 +59,33 @@ function GrabberClass:draw()
     end
 
     if self.selectedCard ~= nil then
-        
+        self.selectedCard:draw(SELECTED_POSITION.CARD.x, SELECTED_POSITION.CARD.y, 2)
+
+        love.graphics.push()
+        love.graphics.translate(SELECTED_POSITION.TEXT.x, SELECTED_POSITION.TEXT.y)
+        love.graphics.scale(2, 2)
+        love.graphics.setColor(0.82, 0.41, 0.12, 1)
+        love.graphics.printf(self.selectedCard.text, 0, 0, SELECTED_POSITION.TEXT_WIDTH/2)
+        love.graphics.pop()
     end
 end
 
 function GrabberClass:grab()
-    
+    if self.selectedCard ~= nil then
+        self.grabbedCard = self.selectedCard
+        self.grabPos = self.grabbedCard.position
+        self.grabOffset = Vector(love.mouse.getX(), love.mouse.getY()) - self.grabPos 
+    end
 end
 
 function GrabberClass:release()
-    
+    local dst = gameManager:getDropTarget()
+
+    gameManager:moveCard(self.grabbedCard, self.grabbedCard.location, dst)
+
+    self.grabbedCard.state = CARD_STATE.IDLE
+
+    self.grabbedCard = nil
+    self.grabPos = Vector()
+    self.grabOffset = Vector()
 end

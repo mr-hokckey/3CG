@@ -16,7 +16,7 @@ function love.load()
     require "grabber"
 
     love.window.setMode(SCREEN_WIDTH, SCREEN_HEIGHT)
-    love.window.setTitle("Mythomagic")
+    love.window.setTitle("Mythomagic") -- A reference to Percy Jackson
 
     smallFont = love.graphics.newFont("assets/MinecraftStandard.otf", 6, "mono")
     love.graphics.setFont(smallFont)
@@ -45,7 +45,7 @@ function love.load()
     gameManager:init(25, cardTables)
 
     -- create 2 decks - a list of 20 card names for each player
-    p1_deck = { "Wooden Cow", "Wooden Cow", "Pegasus", "Pegasus", "Minotaur", "Minotaur", "Titan", "Titan", "Zeus", "Zeus", "Ares", "Ares", "Medusa", "Medusa", "Cyclops", "Cyclops", "Poseidon", "Poseidon", "Artemis", "Artemis", "Hera", "Hera" }
+    p1_deck = { "Wooden Cow", "Pegasus", "Minotaur", "Titan", "Zeus", "Ares", "Medusa", "Cyclops", "Poseidon", "Artemis", "Hera", "Demeter", "Hades", "Heracles", "Dionysus", "Hermes", "Hydra", "Ship of Theseus", "Sword of Damocles", "Midas" }
     p2_deck = { "Wooden Cow", "Wooden Cow", "Pegasus", "Pegasus", "Minotaur", "Minotaur", "Titan", "Titan", "Zeus", "Zeus", "Ares", "Ares", "Medusa", "Medusa", "Cyclops", "Cyclops", "Poseidon", "Poseidon", "Artemis", "Artemis", "Hera", "Hera" }
 
     -- create 2 player objects
@@ -60,6 +60,10 @@ function love.load()
     player1:takeCardFromDeck()
     player1:takeCardFromDeck()
     player1:takeCardFromDeck()
+    player1:takeCardFromDeck()
+    player1:takeCardFromDeck()
+    player1:takeCardFromDeck()
+    player1:takeCardFromDeck()
 
     player2:takeCardFromDeck()
     player2:takeCardFromDeck()
@@ -67,10 +71,12 @@ function love.load()
 
     gameManager:reposition("P1", "HAND")
     gameManager:reposition("P2", "HAND")
+
+    grabber = GrabberClass:new()
 end
 
 function love.update()
-    
+    grabber:update()
 end
 
 function love.draw()
@@ -99,4 +105,6 @@ function love.draw()
             end
         end 
     end
+
+    grabber:draw()
 end
