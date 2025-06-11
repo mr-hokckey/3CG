@@ -29,32 +29,29 @@ function LocationClass:update()
     end
 end
 
+-- draw text indicating how much power each player has at this location, and
+-- which player is winning this location based on the difference.
 function LocationClass:draw()
+    love.graphics.push()
+    love.graphics.translate(LOCATION_NUMBERS[self.id].x, LOCATION_NUMBERS[self.id].y)
+    
     love.graphics.setFont(mediumFont)
 
-    love.graphics.push()
-    love.graphics.translate(LOCATION_NUMBERS[self.id].P1.x, LOCATION_NUMBERS[self.id].P1.y)
     love.graphics.setColor(1, 0.97, 0.86, 1)
     love.graphics.printf(" " .. self.p1_power, 0, -love.graphics.getFont():getHeight()/2, CARD_WIDTH*2, "left")
-    love.graphics.pop()
 
-    love.graphics.push()
-    love.graphics.translate(LOCATION_NUMBERS[self.id].P2.x, LOCATION_NUMBERS[self.id].P2.y)
     love.graphics.setColor(0, 0, 0, 1)
     love.graphics.printf(self.p2_power .. " ", 0, -love.graphics.getFont():getHeight()/2, CARD_WIDTH*2, "right")
-    love.graphics.pop()
 
     love.graphics.setFont(largeFont)
-
-    love.graphics.push()
-    love.graphics.translate(LOCATION_NUMBERS[self.id].DIFF.x, LOCATION_NUMBERS[self.id].DIFF.y)
     
     if self.p1_power > self.p2_power then love.graphics.setColor(1, 0.97, 0.86, 1)
     elseif self.p1_power < self.p2_power then love.graphics.setColor(0, 0, 0, 1)
     elseif self.p1_power == self.p2_power then love.graphics.setColor(0.5, 0, 0, 1) end
     
     love.graphics.printf(math.abs(self.p1_power - self.p2_power), 2, -love.graphics.getFont():getHeight()/2, CARD_WIDTH*2, "center")
-    love.graphics.pop()
     
     love.graphics.setFont(smallFont)
+
+    love.graphics.pop()
 end

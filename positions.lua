@@ -94,19 +94,7 @@ DROP_ZONES = {
 }
 
 LOCATION_NUMBERS = {
-    [1] = {
-        P1 =    Vector(SCREEN_WIDTH * 3/8 - CARD_WIDTH, SCREEN_HEIGHT * 1/2),
-        P2 =    Vector(SCREEN_WIDTH * 3/8 - CARD_WIDTH, SCREEN_HEIGHT * 1/2),
-        DIFF =  Vector(SCREEN_WIDTH * 3/8 - CARD_WIDTH, SCREEN_HEIGHT * 1/2)
-    },
-    [2] = {
-        P1 =    Vector(SCREEN_WIDTH * 4/8 - CARD_WIDTH, SCREEN_HEIGHT * 1/2),
-        P2 =    Vector(SCREEN_WIDTH * 4/8 - CARD_WIDTH, SCREEN_HEIGHT * 1/2),
-        DIFF =  Vector(SCREEN_WIDTH * 4/8 - CARD_WIDTH, SCREEN_HEIGHT * 1/2)
-    },
-    [3] = {
-        P1 =    Vector(SCREEN_WIDTH * 5/8 - CARD_WIDTH, SCREEN_HEIGHT * 1/2),
-        P2 =    Vector(SCREEN_WIDTH * 5/8 - CARD_WIDTH, SCREEN_HEIGHT * 1/2),
-        DIFF =  Vector(SCREEN_WIDTH * 5/8 - CARD_WIDTH, SCREEN_HEIGHT * 1/2)
-    }
+    [1] = Vector(SCREEN_WIDTH * 3/8 - CARD_WIDTH, SCREEN_HEIGHT * 1/2),
+    [2] = Vector(SCREEN_WIDTH * 4/8 - CARD_WIDTH, SCREEN_HEIGHT * 1/2),
+    [3] = Vector(SCREEN_WIDTH * 5/8 - CARD_WIDTH, SCREEN_HEIGHT * 1/2),
 }
