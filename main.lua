@@ -171,6 +171,7 @@ function love.update()
     elseif gameManager.turn_state == TURN_STATE.ENDTURN then
         if leftClick then
             gameManager.turnNumber = gameManager.turnNumber + 1
+            gameManager.revealQueue = {}
             gameManager:beginTurn(player1, player2)
             gameManager.turn_state = TURN_STATE.STAGING
         end
