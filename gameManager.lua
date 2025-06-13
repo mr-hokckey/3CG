@@ -1,34 +1,28 @@
 
 local GameManagerClass = {}
 
-TURN_PHASE = {
-    STAGE = 1,
-    REVEAL = 2,
-    END_TURN = 3
-}
-
-TURN_PHASES = {
-    SETUP = 0,
-    STAGING = 1,
-    REVEAL = 2,
-    REVEAL_FLIP = 3,
-    REVEAL_TARGET = 4,
-    REVEAL_EFFECT = 5,
-    REVEAL_POWER = 6,
-    CALC_POWER = 7,
-    ENDTURN = 8,
-    ENDTURN_SELECT = 9,
-    ENDTURN_TARGET = 10,
-    ENDTURN_EFFECT = 11,
-    ENDTURN_POWER = 12,
-    DISCARD_SELECT = 13,
-    DISCARD_EFFECT = 14
+TURN_STATE = {
+    SETUP = 1,
+    STAGING = 2,
+    REVEAL = 3,
+    REVEAL_FLIP = 4,
+    REVEAL_TARGET = 5,
+    REVEAL_EFFECT = 6,
+    REVEAL_POWER = 7,
+    CALC_POINTS = 8,
+    ENDTURN = 9,
+    ENDTURN_SELECT = 10,
+    ENDTURN_TARGET = 11,
+    ENDTURN_EFFECT = 12,
+    ENDTURN_POWER = 13,
+    DISCARD_SELECT = 14,
+    DISCARD_EFFECT = 15
 }
 
 function GameManagerClass:init(pointsToWin, cardTables)
     self.turnNumber = 1
     self.pointsToWin = pointsToWin
-    self.turnPhase = TURN_PHASES.SETUP
+    self.turn_state = TURN_STATE.SETUP
 
     self.revealQueue = {}
 
@@ -39,25 +33,31 @@ function GameManagerClass:update()
     
 end
 
--- draw 
+-- draw the turn number and current 
 function GameManagerClass:draw()
-    
+    love.graphics.setFont(largeFont)
+
+    love.graphics.setColor(0.82, 0.41, 0.12, 1)
+    love.graphics.print("TURN " .. self.turnNumber, GAME_STATUS.x, GAME_STATUS.y - love.graphics.getFont():getHeight()/2)
+
+    love.graphics.setFont(smallFont)
 end
 
 -- function to be called at the beginning of each turn.
-function GameManagerClass:beginTurn(player1, player2)
+function GameManagerClass:beginTurn(p1, p2)
     -- set each player's mana == turnNumber
-    player1.mana = self.turnNumber
-    player2.mana = self.turnNumber
+    p1.mana = self.turnNumber
+    p2.mana = self.turnNumber
 
     -- have each player take a card from their deck
-    player1:takeCardFromDeck()
-    player2:takeCardFromDeck()
+    p1:takeCardFromDeck()
+    p2:takeCardFromDeck()
 
-    -- p1.standingBy = false
-    -- p2.standingBy = false
+    self:reposition("P1", "HAND")
+    self:reposition("P2", "HAND")
 
-    -- self.turnPhase = STAGE
+    p1.standingBy = false
+    p2.standingBy = false
 end
 
 -- returns the card pile the mouse is currently hovering over.
@@ -114,9 +114,9 @@ function GameManagerClass:reposition(owner, location)
 end
 -- function to be called when a player makes a move.
 -- add the move to the event queue.
-function GameManagerClass:addMoveToQueue(player, card, location)
+function GameManagerClass:addMoveToQueue(player_key, card, location)
     table.insert(self.revealQueue, {
-        player = player, 
+        player = player_key, 
         card = card, 
         location = location
     })

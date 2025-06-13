@@ -74,3 +74,11 @@ function LocationClass:calcPower()
         end
     end
 end
+
+function LocationClass:awardPoints(p1, p2)
+    if self.p1_power > self.p2_power then
+        p1.points = p1.points + self.p1_power - self.p2_power
+    elseif self.p1_power < self.p2_power then
+        p2.points = p2.points + self.p2_power - self.p1_power
+    end
+end

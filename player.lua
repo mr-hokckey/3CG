@@ -13,7 +13,7 @@ function PlayerClass:new(id, deck, hand, discard)
 
     player.id = id
     player.key = PLAYER_KEYS[id]
-    player.mana = 10
+    player.mana = 0
     player.points = 0
 
     player.deck = deck
@@ -32,6 +32,7 @@ end
 function PlayerClass:draw()
     love.graphics.setFont(largeFont)
 
+    love.graphics.setColor(0.82, 0.41, 0.12, 1)
     love.graphics.printf("MANA:\nSCORE:", PLAYER_NUMBERS[self.id].x, PLAYER_NUMBERS[self.id].y, SCREEN_WIDTH / 8, "right")
     love.graphics.printf("  " .. self.mana .. "\n  " .. self.points, PLAYER_NUMBERS[self.id].x + SCREEN_WIDTH / 8, PLAYER_NUMBERS[self.id].y, SCREEN_WIDTH / 8, "left")
 
@@ -45,7 +46,10 @@ function PlayerClass:takeCardFromDeck()
         return false
     end
     
-    table.insert(self.hand, CardClass:new(table.remove(self.deck, 1), self.id, "HAND"))
+    local card = CardClass:new(table.remove(self.deck, 1), self.id, "HAND")
+    card.isFaceUp = (card.owner_key == "P1" and true) or false
+    table.insert(self.hand, card)
+    
     return true
 end
 
@@ -55,7 +59,6 @@ end
 function PlayerClass:stageCard(gameManager, card, dst)
     if self.mana >= card.cost then
         if gameManager:moveCard(card, "HAND", dst) then
-            card.isFaceUp = false
             self.mana = self.mana - card.cost
             gameManager:addMoveToQueue(card.owner_key, card, dst)
         end
@@ -72,17 +75,22 @@ function PlayerClass:undoAll(gameManager, player_key)
 
     for i = #gameManager.revealQueue, 1, -1 do
         local reveal = gameManager.revealQueue[i]
-        gameManager:moveCard(reveal.card, reveal.location, "HAND")
-        reveal.card.isFaceUp = true
-        self.mana = self.mana + reveal.card.cost 
-        table.remove(gameManager.revealQueue, i)
+        if reveal.player == player_key then
+            gameManager:moveCard(reveal.card, reveal.location, "HAND")
+            reveal.card.isFaceUp = true
+            self.mana = self.mana + reveal.card.cost 
+            table.remove(gameManager.revealQueue, i)
+        end
     end
 end
 
 -- function to be called after the player is finished staging their cards.
 -- tells the gameManager that the player has submitted their play.
 function PlayerClass:submitPlay(gameManager)
-    for i = #gameManager.revealQueue, 1, -1 do
-        gameManager.revealQueue[i].card:flip()
+    if gameManager.turn_state == TURN_STATE.STAGING then
+        for i = #gameManager.revealQueue, 1, -1 do
+            gameManager.revealQueue[i].card:flip()
+        end
+        self.standingBy = true
     end
 end

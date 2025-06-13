@@ -63,12 +63,14 @@ function GrabberClass:draw()
     if self.selectedCard ~= nil then
         self.selectedCard:draw(SELECTED_POSITION.CARD.x, SELECTED_POSITION.CARD.y, 2)
 
-        love.graphics.push()
-        love.graphics.translate(SELECTED_POSITION.TEXT.x, SELECTED_POSITION.TEXT.y)
-        love.graphics.scale(2, 2)
-        love.graphics.setColor(0.82, 0.41, 0.12, 1)
-        love.graphics.printf(self.selectedCard.text, 0, 0, SELECTED_POSITION.TEXT_WIDTH/2)
-        love.graphics.pop()
+        if self.selectedCard.isFaceUp then
+            love.graphics.push()
+            love.graphics.translate(SELECTED_POSITION.TEXT.x, SELECTED_POSITION.TEXT.y)
+            love.graphics.scale(2, 2)
+            love.graphics.setColor(0.82, 0.41, 0.12, 1)
+            love.graphics.printf(self.selectedCard.text, 0, 0, SELECTED_POSITION.TEXT_WIDTH/2)
+            love.graphics.pop()
+        end
     end
 end
 
