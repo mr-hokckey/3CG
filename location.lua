@@ -55,3 +55,22 @@ function LocationClass:draw()
 
     love.graphics.pop()
 end
+
+-- calculate each player's total power at this location, EXCLUDING cards that are
+-- face down.
+function LocationClass:calcPower()
+    self.p1_power = 0
+    self.p2_power = 0
+
+    for _, card in ipairs(self.p1_cards) do
+        if card.isFaceUp == true then
+            self.p1_power = self.p1_power + card.power
+        end
+    end
+
+    for _, card in ipairs(self.p2_cards) do
+        if card.isFaceUp == true then
+            self.p2_power = self.p2_power + card.power
+        end
+    end
+end

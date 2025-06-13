@@ -73,6 +73,8 @@ function love.load()
     gameManager:reposition("P2", "HAND")
 end
 
+-- An attempt at a Finite State Machine. The textbook says to use a switch statement,
+-- but Lua doesn't actually have that, so I used a bunch of if-elses.
 function love.update()
     grabber:update()
 

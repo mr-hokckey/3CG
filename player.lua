@@ -20,6 +20,8 @@ function PlayerClass:new(id, deck, hand, discard)
     player.hand = hand
     player.discard = discard
 
+    player.standingBy = false
+
     return player
 end
 
@@ -53,6 +55,7 @@ end
 function PlayerClass:stageCard(gameManager, card, dst)
     if self.mana >= card.cost then
         if gameManager:moveCard(card, "HAND", dst) then
+            card.isFaceUp = false
             self.mana = self.mana - card.cost
             gameManager:addMoveToQueue(card.owner_key, card, dst)
         end
@@ -61,15 +64,17 @@ function PlayerClass:stageCard(gameManager, card, dst)
 end
 
 -- undo all moves.
-function PlayerClass:undoAll(gameManager)
+function PlayerClass:undoAll(gameManager, player_key)
     -- for each move in the event queue
         -- move the card back to the player's hand
         -- give them their mana back
         -- clear this move from the event queue.
 
     for i = #gameManager.revealQueue, 1, -1 do
-        gameManager:moveCard(gameManager.revealQueue[i].card, gameManager.revealQueue[i].location, "HAND")
-        self.mana = self.mana + gameManager.revealQueue[i].card.cost
+        local reveal = gameManager.revealQueue[i]
+        gameManager:moveCard(reveal.card, reveal.location, "HAND")
+        reveal.card.isFaceUp = true
+        self.mana = self.mana + reveal.card.cost 
         table.remove(gameManager.revealQueue, i)
     end
 end
@@ -77,5 +82,7 @@ end
 -- function to be called after the player is finished staging their cards.
 -- tells the gameManager that the player has submitted their play.
 function PlayerClass:submitPlay(gameManager)
-    
+    for i = #gameManager.revealQueue, 1, -1 do
+        gameManager.revealQueue[i].card:flip()
+    end
 end

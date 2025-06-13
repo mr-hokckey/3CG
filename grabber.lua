@@ -87,7 +87,6 @@ end
 function GrabberClass:release()
     local dst = gameManager:getDropTarget()
 
-    -- gameManager:moveCard(self.grabbedCard, self.grabbedCard.location, dst)
     self.owner:stageCard(gameManager, self.grabbedCard, dst)
 
     self.grabbedCard.state = CARD_STATE.IDLE

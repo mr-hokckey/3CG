@@ -2,15 +2,33 @@
 local GameManagerClass = {}
 
 TURN_PHASE = {
-    STAGE,
-    REVEAL,
-    END_TURN
+    STAGE = 1,
+    REVEAL = 2,
+    END_TURN = 3
+}
+
+TURN_PHASES = {
+    SETUP = 0,
+    STAGING = 1,
+    REVEAL = 2,
+    REVEAL_FLIP = 3,
+    REVEAL_TARGET = 4,
+    REVEAL_EFFECT = 5,
+    REVEAL_POWER = 6,
+    CALC_POWER = 7,
+    ENDTURN = 8,
+    ENDTURN_SELECT = 9,
+    ENDTURN_TARGET = 10,
+    ENDTURN_EFFECT = 11,
+    ENDTURN_POWER = 12,
+    DISCARD_SELECT = 13,
+    DISCARD_EFFECT = 14
 }
 
 function GameManagerClass:init(pointsToWin, cardTables)
     self.turnNumber = 1
     self.pointsToWin = pointsToWin
-    self.turnPhase = TURN_PHASE.STAGE
+    self.turnPhase = TURN_PHASES.SETUP
 
     self.revealQueue = {}
 
@@ -27,10 +45,14 @@ function GameManagerClass:draw()
 end
 
 -- function to be called at the beginning of each turn.
-function GameManagerClass:beginTurn()
+function GameManagerClass:beginTurn(player1, player2)
     -- set each player's mana == turnNumber
+    player1.mana = self.turnNumber
+    player2.mana = self.turnNumber
 
     -- have each player take a card from their deck
+    player1:takeCardFromDeck()
+    player2:takeCardFromDeck()
 
     -- p1.standingBy = false
     -- p2.standingBy = false
@@ -61,7 +83,7 @@ end
 -- src and dst are location strings, card is a card object.
 function GameManagerClass:moveCard(card, src, dst)
 
-    if src == dst then 
+    if src == dst or dst == "FALSE" then 
         self:reposition(card.owner_key, src)
         return false
     end
@@ -77,8 +99,9 @@ function GameManagerClass:moveCard(card, src, dst)
         table.insert(self.cardTables[card.owner_key][dst], card)
         card.location = dst
         self:reposition(card.owner_key, dst)
+        self:reposition(card.owner_key, src)
     end
-    self:reposition(card.owner_key, src)
+    -- self:reposition(card.owner_key, src)
 
     return true
 end
@@ -103,9 +126,10 @@ end
 -- cards will be revealed and take effect in the order given by the event queue.
 -- 
 function GameManagerClass:revealCards()
-    -- self.turnPhase = REVEAL
-
-
+    -- for each card in the reveal queue
+        -- flip over the card and highlight it
+        -- highlight all cards affected by its ability
+        -- 
 end
 
 function GameManagerClass:endTurn()
