@@ -124,14 +124,14 @@ function love.update()
             if #gameManager.revealQueue > 0 then
                 gameManager.revealQueue[1].card:flip()
                 grabber.selectedCard = gameManager.revealQueue[1].card
-                gameManager.turn_state = TURN_STATE.REVEAL_FLIP
+                gameManager.turn_state = TURN_STATE.REVEAL_NEW
             else
                 gameManager.turn_state = TURN_STATE.CALC_POINTS
             end
         end
     
     -- the next card in the queue flips over.
-    elseif gameManager.turn_state == TURN_STATE.REVEAL_FLIP then
+    elseif gameManager.turn_state == TURN_STATE.REVEAL_NEW then
         if leftClick then
             if #gameManager.revealQueue[1].card.ability == 0 then
                 gameManager.turn_state = TURN_STATE.REVEAL_POWER
@@ -168,6 +168,7 @@ function love.update()
             gameManager.turn_state = TURN_STATE.ENDTURN
         end
     
+    -- now time for all the endOfTurn effects!
     elseif gameManager.turn_state == TURN_STATE.ENDTURN then
         if leftClick then
             gameManager.turnNumber = gameManager.turnNumber + 1
@@ -176,7 +177,7 @@ function love.update()
             gameManager.turn_state = TURN_STATE.STAGING
         end
     
-    elseif gameManager.turn_state == TURN_STATE.ENDTURN_SELECT then
+    elseif gameManager.turn_state == TURN_STATE.ENDTURN_NEW then
 
     
     elseif gameManager.turn_state == TURN_STATE.ENDTURN_TARGET then

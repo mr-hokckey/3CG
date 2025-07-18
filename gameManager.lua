@@ -2,21 +2,21 @@
 local GameManagerClass = {}
 
 TURN_STATE = {
-    SETUP = 1,
-    STAGING = 2,
-    REVEAL = 3,
-    REVEAL_FLIP = 4,
-    REVEAL_TARGET = 5,
-    REVEAL_EFFECT = 6,
-    REVEAL_POWER = 7,
-    CALC_POINTS = 8,
-    ENDTURN = 9,
-    ENDTURN_SELECT = 10,
-    ENDTURN_TARGET = 11,
-    ENDTURN_EFFECT = 12,
-    ENDTURN_POWER = 13,
-    DISCARD_SELECT = 14,
-    DISCARD_EFFECT = 15
+    SETUP = 1,              -- 
+    STAGING = 2,            -- players stage their plays
+    REVEAL = 3,             -- begin the reveal!
+    REVEAL_NEW = 4,         -- |
+    REVEAL_TARGET = 5,      -- | Loop through each of these for each card that was played
+    REVEAL_EFFECT = 6,      -- |
+    REVEAL_POWER = 7,       -- |
+    CALC_POINTS = 8,        -- calc points for each player
+    ENDTURN = 9,            -- now for all the endOfTurn effects...
+    ENDTURN_NEW = 10,       -- |
+    ENDTURN_TARGET = 11,    -- | Loop through these for each card
+    ENDTURN_EFFECT = 12,    -- |
+    ENDTURN_POWER = 13,     -- |
+    DISCARD_SELECT = 14,    -- These two are only for when Hydra or Ship of Theseus is played
+    DISCARD_EFFECT = 15     -- 
 }
 
 function GameManagerClass:init(pointsToWin, cardTables)
@@ -38,7 +38,7 @@ function GameManagerClass:draw()
     love.graphics.setFont(largeFont)
 
     love.graphics.setColor(0.82, 0.41, 0.12, 1)
-    love.graphics.print("TURN " .. self.turnNumber, GAME_STATUS.x, GAME_STATUS.y - love.graphics.getFont():getHeight()/2)
+    love.graphics.print("TURN " .. self.turnNumber .. "\n" .. self.turn_state, GAME_STATUS.x, GAME_STATUS.y - love.graphics.getFont():getHeight()/2)
 
     love.graphics.setFont(smallFont)
 end
@@ -108,10 +108,17 @@ end
 
 -- given a player ID and a location, reposition cards in the corresponding card table.
 function GameManagerClass:reposition(owner, location)
-    for i, card in ipairs(self.cardTables[owner][location]) do
-        card.position = POSITIONS[owner][location][i]
+    if location == "HAND" then
+        for i, card in ipairs(self.cardTables[owner][location]) do
+            card.position = POSITIONS[owner][location][4] + Vector(CARD_WIDTH * (-#self.cardTables[owner][location]/2 + i-1 + 1/2), 0)
+        end
+    else
+        for i, card in ipairs(self.cardTables[owner][location]) do
+            card.position = POSITIONS[owner][location][i]
+        end
     end
 end
+
 -- function to be called when a player makes a move.
 -- add the move to the event queue.
 function GameManagerClass:addMoveToQueue(player_key, card, location)

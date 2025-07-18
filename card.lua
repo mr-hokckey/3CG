@@ -51,7 +51,7 @@ function CardClass:update()
     
 end
 
--- optional arguments to draw at a specific position + scale
+-- optional arguments to draw at a specific position and scale. The actual location of the card will remain the same.
 function CardClass:draw(x, y, s)
     love.graphics.push()
 
